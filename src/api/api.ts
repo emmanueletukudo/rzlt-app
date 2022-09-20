@@ -49,20 +49,16 @@ const searchTopic = async (q: string, nums: number) => {
   return res;
 }
 
-const fetchHistory = (username: string) => {
-  const requestObj: RequestInit = {
-    method: "GET",
-    redirect: "follow",
+const fetchHistory = () => {
+  let res;
+  const history = localStorage.getItem("search_terms");
+  if (history) {
+    res = JSON.parse(history);
   }
-
-  const res = fetch(`${baseURL}/topics/${username}`, requestObj)
-    .then(res => res.text())
-    .then(result => JSON.parse(result))
-    .catch(err => console.log(err));
   return res;
 }
 
 
 
 
-export { baseURL, fetchUser, getRepos, searchTopic };
+export { baseURL, fetchUser, getRepos, searchTopic, fetchHistory };

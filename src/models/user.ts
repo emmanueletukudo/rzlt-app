@@ -148,6 +148,10 @@ export interface Search {
   score: number
 }
 
+export interface History {
+  search: string
+}
+
 export const mockUser = {
   login: "emmanueletukudo",
   id: 39107093,
@@ -325,11 +329,22 @@ export const mockSearch = [
   },
 ]
 
+export const mockHistory = [
+  {
+    "search": "react"
+  },
+  {
+    "search": "aws"
+  },
+]
+
 export type UserContextType = {
   user: User;
   repos: Repo[];
   searches: Search[],
+  history: History[];
   searchGithub: (q: string, nums: number) => void;
+  fetchOldSearches: () => void;
   searchUser: (user: string) => void;
   fetchRepos: (user: string, nums: number) => void;
 };

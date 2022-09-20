@@ -1,6 +1,6 @@
-import React, { createContext, useContext, useState } from "react";
-import {User, mockUser, mockRepo, UserContextType, Repo, Search, mockSearch} from "../models/user";
-import {fetchUser, getRepos, searchTopic} from "../api/api";
+import React, { createContext, useContext, useEffect, useState } from "react";
+import {User, mockUser, mockRepo, UserContextType, Repo, Search, mockSearch, mockHistory, History} from "../models/user";
+import {fetchUser, getRepos, searchTopic, fetchHistory} from "../api/api";
 
 type GProps = {
   children: React.ReactNode;
@@ -22,6 +22,7 @@ const GithubProvider = ({ children }: GProps) => {
   const [user, setUser] = useState<User>(mockUser);
   const [repos, setRepos] = useState<Repo[]>(mockRepo);
   const [searches, setSearches] =  useState<Search[]>(mockSearch)
+  const [history, setHistroy] =  useState<History[]>(mockHistory)
 
   const searchUser = async (user: string) => {
     const res =  await fetchUser(user);
@@ -31,19 +32,45 @@ const GithubProvider = ({ children }: GProps) => {
   const fetchRepos = async(user: string, nums: number) => {
       const res = await getRepos(user, nums);
       setRepos(res);
-      console.log(res);
   }
 
   const searchGithub = async(q: string, nums: number) => {
+    let searchTerms =  [];
       const res =  await searchTopic(q, nums);
+      if(res.items.length > 0) {
+        let query = {"search": q }
+        const history = localStorage.getItem("search_terms");
+        if (history) {
+          const historyJSON =  JSON.parse(history);
+          for (let h = 0; h < historyJSON.length; h++) {
+            const element = historyJSON[h];
+            if (element.search !== q ) {
+              searchTerms.push(element);
+            }
+          }
+          searchTerms.push(query);
+          localStorage.setItem("search_terms", JSON.stringify(searchTerms));
+        }
+
+      }
       setSearches(res.items);
-      console.log(res.items);
   }
 
+  const fetchOldSearches = async () => {
+      const res = await fetchHistory();
+      setHistroy(res);
+      console.log(res);
+  }
+
+  useEffect(() => {
+    fetchOldSearches();
+  }, [])
   const value = {
     user,
     repos,
     searches,
+    history,
+    fetchOldSearches,
     fetchRepos,
     searchUser,
     searchGithub

@@ -1,6 +1,6 @@
 import React, { createContext, useContext, useState } from "react";
-import {User, mockUser, mockRepo, UserContextType, Repo} from "../models/user";
-import {fetchUser, getRepos} from "../api/api";
+import {User, mockUser, mockRepo, UserContextType, Repo, Search, mockSearch} from "../models/user";
+import {fetchUser, getRepos, searchTopic} from "../api/api";
 
 type GProps = {
   children: React.ReactNode;
@@ -21,6 +21,7 @@ export function useGithub() {
 const GithubProvider = ({ children }: GProps) => {
   const [user, setUser] = useState<User>(mockUser);
   const [repos, setRepos] = useState<Repo[]>(mockRepo);
+  const [searches, setSearches] =  useState<Search[]>(mockSearch)
 
   const searchUser = async (user: string) => {
     const res =  await fetchUser(user);
@@ -33,11 +34,19 @@ const GithubProvider = ({ children }: GProps) => {
       console.log(res);
   }
 
+  const searchGithub = async(q: string, nums: number) => {
+      const res =  await searchTopic(q, nums);
+      setSearches(res.items);
+      console.log(res.items);
+  }
+
   const value = {
     user,
     repos,
+    searches,
     fetchRepos,
     searchUser,
+    searchGithub
   }
 
 

@@ -20,8 +20,6 @@ function Repo(repo: RProps) {
         </Typography>
         <Typography variant="body2">
           {description}
-          <br />
-          {'"a benevolent smile"'}
         </Typography>
       </CardContent>
       <CardActions>

@@ -20,11 +20,20 @@ const fetchUser = (username: string) => {
   return res;
 }
 
-const serachTopic = async (q: string) => {
+const getRepos = (username: string, numbers: number) => {
+  const res = fetch(`${baseURL}/users/${username}/repos?per_page=${numbers}`)
+    .then((result) => result.text())
+    .then(repos => JSON.parse(repos))
+    .catch(err => console.log(err));
+  return res;
+}
+
+const searchTopic = async (q: string, nums: number) => {
+  // topics ? q = { query }{& page, per_page }
   const params: SParams = {
     q: `${q}&`,
     page: "1",
-    per_page: "100"
+    per_page: `${nums}`,
   }
   const queryString = new URLSearchParams(params);
 
@@ -33,17 +42,9 @@ const serachTopic = async (q: string) => {
     redirect: "follow",
   }
 
-  const res = await fetch(`${baseURL}/search/topics/${queryString}`, searchObj)
+  const res = await fetch(`${baseURL}/search/topics?${queryString}`, searchObj)
     .then(res => res.text())
     .then(user => JSON.parse(user))
-    .catch(err => console.log(err));
-  return res;
-}
-
-const getRepos = (username: string, numbers: number) => {
-  const res = fetch(`${baseURL}/users/${username}/repos?per_page=${numbers}`)
-    .then((result) => result.text())
-    .then(repos => JSON.parse(repos))
     .catch(err => console.log(err));
   return res;
 }
@@ -58,11 +59,10 @@ const fetchHistory = (username: string) => {
     .then(res => res.text())
     .then(result => JSON.parse(result))
     .catch(err => console.log(err));
-
   return res;
 }
 
 
 
 
-export { baseURL, fetchUser, getRepos, serachTopic };
+export { baseURL, fetchUser, getRepos, searchTopic };

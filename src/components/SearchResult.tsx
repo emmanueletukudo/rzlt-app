@@ -5,12 +5,12 @@ import { useGithub } from '../contexts/GithubContext';
 function SearchResult() {
   const {searches} = useGithub();
   return (
-    <div style={{marginTop: 20}}>
+    <div data-testid="search-result" style={{marginTop: 20}}>
       {searches && searches.filter(s=> s.display_name !== null ).map((s, k) => (
          <Box sx={{ minWidth: 275, maxWidth: 700, marginBottom: 2 }} key={k}>
          <Card variant="outlined">
            <CardContent>
-           <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
+           <Typography data-testid="search-name" sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
              {s.display_name}
            </Typography>
            <Typography variant="h5" component="div">

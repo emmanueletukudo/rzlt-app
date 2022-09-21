@@ -6,7 +6,6 @@ import { useGithub } from '../contexts/GithubContext';
 function Home() {
   const [query,  setQuery] =  useState("");
   const gitHub =  useGithub();
-
   const handleSearch = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     gitHub.searchUser(query);
@@ -16,7 +15,7 @@ function Home() {
   return (
     <div className="wrapper">
       <h2>Github Users Directory</h2>
-      <Search handleSearch={(e) => handleSearch(e)} query={query}  setQuery={setQuery}/>
+      <Search data-testid="home-search" handleSearch={(e) => handleSearch(e)} query={query}  setQuery={setQuery}/>
       <UserCard/>
     </div>
   )

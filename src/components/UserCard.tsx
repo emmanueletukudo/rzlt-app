@@ -6,14 +6,14 @@ import Repo from './Repo';
 
 function UserCard() {
   const { user, repos} = useGithub();
-	const { avatar_url, html_url, name, company, blog, location, bio, twitter_username} = user;
+	const { avatar_url, html_url, name, company, blog, location, bio, twitter_username} = user || {};
 
 	return (
 		<Wrapper>
 			<header>
 				<img src={avatar_url} alt={name}></img>
 				<div>
-					<h4>{name}</h4>
+					<h4 data-testid="username">{name}</h4>
 					<p>@{twitter_username || 'john doe'}</p>
 				</div>
 				<a href={html_url}>follow</a>
@@ -37,9 +37,11 @@ function UserCard() {
 			</div>
       <div className="repo">
         <h4>Repositories</h4>
+				<div data-testid="repo-list">
         {repos && repos.map((r, k)=> (
           <Repo key={k} name={r.name} url={r.url} description={r.description} />
         ))}
+				</div>
       </div>
 		</Wrapper>
 	);

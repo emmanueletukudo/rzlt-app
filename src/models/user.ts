@@ -338,7 +338,7 @@ export const mockHistory = [
   },
 ]
 
-export type UserContextType = {
+export type GitHubContextType = {
   user: User;
   repos: Repo[];
   searches: Search[],

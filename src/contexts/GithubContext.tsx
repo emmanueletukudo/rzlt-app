@@ -1,14 +1,15 @@
 import React, { createContext, useContext, useEffect, useState } from "react";
-import {User, mockUser, mockRepo, UserContextType, Repo, Search, mockSearch, mockHistory, History} from "../models/user";
+import {User, mockUser, mockRepo, GitHubContextType, Repo, Search, mockSearch, mockHistory, History} from "../models/user";
 import {fetchUser, getRepos, searchTopic, fetchHistory} from "../api/api";
 
 type GProps = {
   children: React.ReactNode;
 }
-export const GithubContext = createContext<UserContextType | null>(null);
+
+export const  GithubContext = createContext<GitHubContextType | null>(null);
 
 export function useGithub() {
-  const context = useContext(GithubContext)
+  const context = useContext(GithubContext);
   if (context === null) {
       throw new Error(
         "GithubProvider must be wrapped inside the provider, " +
@@ -31,7 +32,7 @@ const GithubProvider = ({ children }: GProps) => {
 
   const fetchRepos = async(user: string, nums: number) => {
       const res = await getRepos(user, nums);
-      setRepos(res);
+        setRepos(res);
   }
 
   const searchGithub = async(q: string, nums: number) => {
@@ -58,13 +59,11 @@ const GithubProvider = ({ children }: GProps) => {
 
   const fetchOldSearches = async () => {
       const res = await fetchHistory();
-      setHistroy(res);
-      console.log(res);
+      if (res) {
+        setHistroy(res);
+      }
   }
 
-  useEffect(() => {
-    fetchOldSearches();
-  }, [])
   const value = {
     user,
     repos,

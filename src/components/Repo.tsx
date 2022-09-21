@@ -10,7 +10,7 @@ type  RProps = {
 function Repo(repo: RProps) {
   const {name, url, description} = repo;
   return (
-      <Box sx={{ minWidth: 275, maxWidth: 700, marginBottom: 2 }}>
+      <Box data-testid="repo-card" sx={{ minWidth: 275, maxWidth: 700, marginBottom: 2 }}>
       <Card variant="outlined">
         <CardContent>
         <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>

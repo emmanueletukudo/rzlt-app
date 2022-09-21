@@ -6,8 +6,9 @@ export type SProps = {
   query: string;
   setQuery: React.Dispatch<React.SetStateAction<string>>;
   handleSearch: (e: React.FormEvent<HTMLFormElement>) => void
+  disabled: boolean,
 }
-const Search = ({query, setQuery, handleSearch}: SProps) => {
+const Search = ({query, setQuery, handleSearch, disabled}: SProps) => {
   return (
       <form className="search-form" onSubmit={(e) => handleSearch(e)}>
         <TextField
@@ -21,7 +22,7 @@ const Search = ({query, setQuery, handleSearch}: SProps) => {
           placeholder="Search..."
           size="small"
         />
-        <IconButton type="submit" data-testid="search-btn" aria-label="search" className="input_submit">
+        <IconButton disabled={disabled} type="submit" data-testid="search-btn" aria-label="search" className="input_submit">
         <SearchIcon style={{ fill: "blue" }} />
         </IconButton>
   </form>

@@ -28,7 +28,7 @@ function Home() {
 
   return (
     <div className="wrapper">
-      <h2>Github Users Directory</h2>
+      <h2>Github Users Directory <a href='/history'>History</a></h2>
       <Search data-testid="home-search" disabled={disabled} handleSearch={(e) => handleSearch(e)} query={query}  setQuery={setQuery}/>
       {show && <UserCard/>}
     </div>

@@ -34,7 +34,7 @@ function GithubSearch() {
 
   return (
     <div style={{width: "100%", display: "flex", flexDirection: "column", justifyContent: "center", alignItems: "center"}}>
-      <h2>Search any topic on Github</h2>
+      <h2>Search any topic on Github <a href='/'>Home</a></h2>
       <Search query={query} setQuery={setQuery}  disabled={disabled} handleSearch={(e) => handleSearch(e)} />
       <div data-testid="previous-searches" style={{marginTop: "20px", display: "flex", flexDirection: "row", alignItems: "center", justifyContent: "center" }}>
       Previous searches:
